@@ -2,7 +2,6 @@ extends KinematicBody
 
 const AUTO_JUMP_VELOCITY: float = 5.0;
 
-
 var speed: float = 13.0;
 var acceleration: float = 10.0;
 var gravity: float = 50.0;
@@ -38,9 +37,10 @@ func checkStep():
 		fall.y = AUTO_JUMP_VELOCITY;
 
 func movement(delta: float):
-	var hasMoved = false; # variable to check if the player should be moving or not, prevents sliding down slopes (and stairs)
+	var hasMoved = false; # variable to check if the player should be moving or not, prevents sliding down slopes
 	
-	direction = Vector3()
+	direction = Vector3();
+	
 	if(Input.is_key_pressed(KEY_W)):
 		hasMoved = true;
 		direction -= transform.basis.z;
@@ -64,6 +64,7 @@ func movement(delta: float):
 
 	direction = direction.normalized();
 	velocity = velocity.linear_interpolate(direction * speed, acceleration * delta);
+	
 	if(hasMoved):
 		velocity = move_and_slide(velocity, Vector3.UP);
 		move_and_slide(fall, Vector3.UP);
